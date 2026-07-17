@@ -6,6 +6,8 @@ adjust-cell-height = 2
 font-thicken = true
 adjust-cursor-thickness = 2
 
+copy-on-select = clipboard
+
 # 新分出来的屏幕自动保持在当前目录下
 window-inherit-working-directory = true
 # 聚焦淡化
