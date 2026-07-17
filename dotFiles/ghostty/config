@@ -1,0 +1,12 @@
+# 外观
+theme = "Catppuccin Mocha"
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13.5
+adjust-cell-height = 2
+font-thicken = true
+adjust-cursor-thickness = 2
+
+# 新分出来的屏幕自动保持在当前目录下
+window-inherit-working-directory = true
+# 聚焦淡化
+unfocused-split-opacity = 0.7
