@@ -5,7 +5,7 @@
 #   --no-backup  不备份，直接覆盖
 #
 # 会依次调用:
-#   setzshrc.sh   -> ~/.zshrc
+#   setzshrc.sh   -> ~/.zshrc, ~/.zprofile
 #   setghostty.sh -> ~/.config/ghostty/config, ~/.config/starship.toml
 set -euo pipefail
 
@@ -17,7 +17,7 @@ usage() {
   echo "  --no-backup, -n   不备份，直接覆盖" >&2
   echo "" >&2
   echo "同步全部配置:" >&2
-  echo "  .zshrc / ghostty config / starship.toml" >&2
+  echo "  .zshrc / .zprofile / ghostty config / starship.toml" >&2
   exit 1
 }
 
@@ -27,7 +27,7 @@ for arg in "$@"; do
   esac
 done
 
-echo "==> 同步 zshrc"
+echo "==> 同步 zshrc / zprofile"
 "${SCRIPT_DIR}/setzshrc.sh" "$@"
 
 echo "==> 同步 ghostty / starship"

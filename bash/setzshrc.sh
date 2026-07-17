@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
-# 将仓库中的 dotFiles/.zshrc 同步到本机 ~/.zshrc
+# 将仓库中的 zsh 配置同步到本机
 # 用法: ./setzshrc.sh [--backup|--no-backup]
 #   --backup     覆盖前备份（默认）
 #   --no-backup  不备份，直接覆盖
+#
+# 同步映射:
+#   dotFiles/.zshrc    -> ~/.zshrc
+#   dotFiles/.zprofile -> ~/.zprofile
 set -euo pipefail
 
 BACKUP=1
@@ -24,19 +28,30 @@ while [[ $# -gt 0 ]]; do
 done
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SRC="${SCRIPT_DIR}/../dotFiles/.zshrc"
-DEST="${HOME}/.zshrc"
+DOTFILES="${SCRIPT_DIR}/../dotFiles"
 
-if [[ ! -f "$SRC" ]]; then
-  echo "错误: 源文件不存在: $SRC" >&2
-  exit 1
-fi
+sync_file() {
+  local src="$1"
+  local dest="$2"
+  local dest_dir
 
-if [[ "$BACKUP" -eq 1 && -f "$DEST" ]]; then
-  BACKUP_FILE="${DEST}.bak.$(date +%Y%m%d%H%M%S)"
-  cp "$DEST" "$BACKUP_FILE"
-  echo "已备份: $BACKUP_FILE"
-fi
+  if [[ ! -f "$src" ]]; then
+    echo "错误: 源文件不存在: $src" >&2
+    exit 1
+  fi
 
-cp "$SRC" "$DEST"
-echo "已同步: $SRC -> $DEST"
+  dest_dir="$(dirname "$dest")"
+  mkdir -p "$dest_dir"
+
+  if [[ "$BACKUP" -eq 1 && -f "$dest" ]]; then
+    local backup_file="${dest}.bak.$(date +%Y%m%d%H%M%S)"
+    cp "$dest" "$backup_file"
+    echo "已备份: $backup_file"
+  fi
+
+  cp "$src" "$dest"
+  echo "已同步: $src -> $dest"
+}
+
+sync_file "${DOTFILES}/.zshrc" "${HOME}/.zshrc"
+sync_file "${DOTFILES}/.zprofile" "${HOME}/.zprofile"

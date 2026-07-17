@@ -19,6 +19,12 @@ brew install --cask font-jetbrains-mono-nerd-font
 brew install starship
 ```
 
+- fnm
+
+```bash
+brew install fnm
+```
+
 - Plugins
 
 ``` bash
